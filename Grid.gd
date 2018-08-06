@@ -20,7 +20,7 @@ const LEFT = Vector2(-1, 0)
 
 var coin_container = []
 var inventory_queue = []
-var combo_container = []
+var combo_coin_container = []
 
 onready var Coin = preload("res://Coin.tscn")
 onready var Player = preload("res://Player.tscn")
@@ -157,7 +157,7 @@ func deselect_coins(playerPos):
 	# If they are combined, move coins below up by 1 vertical coordinate.
 	# Can't have multiple calls of combine_coins, need to wait until the previous is entirely finished.
 	# To solve this, keep a queue of coins to check for combinations.
-	combo_container.append(inventory_queue[inventory_queue.size()-1].grid_position)
+	combo_coin_container.append(inventory_queue[inventory_queue.size()-1])
 	
 	# Empty Inventory
 	inventory_queue.clear()
@@ -194,7 +194,7 @@ func spawn_new_coin_row():
 func check_coin_transition(gridPos):
 	var worldPos = map_to_world(gridPos) + half_tile_size
 	for coin in coin_container:
-		if coin.grid_position.x == worldPos.x && coin.grid_position.y == worldPos.y:
+		if coin.grid_position == worldPos:
 			return true
 	return false
 
@@ -215,7 +215,7 @@ func combine_coins(worldPos):
 			for coinPos in coin_positions:
 				var coinWorldPos = map_to_world(coinPos) + half_tile_size
 				for coin in coin_container:
-					if coin.grid_position.x == coinWorldPos.x && coin.grid_position.y == coinWorldPos.y:
+					if coin.grid_position == coinWorldPos:
 						remove_coin(coin)
 						break
 			
@@ -275,8 +275,11 @@ func grid_chain_cascade(gridPos):
 		y += 1
 
 func _process(delta):
-	if combo_container.size() > 0:
-		combine_coins(combo_container.pop_front())
+	if combo_coin_container.size() > 0:
+		print(combo_coin_container.size())
+		# Check to see if coin transition has stopped before attempting to combine.
+		if check_coin_transition(world_to_map(combo_coin_container[0].position)):
+			combine_coins(combo_coin_container.pop_front().grid_position)
 	
 	# Display grid.
 	if Input.is_action_just_pressed("ui_up"):
