@@ -233,6 +233,9 @@ func combine_coins(worldPos):
 				add_child(new_coin)
 				coin_container.append(new_coin)
 			
+				# Remove the space occupied by the new coin from the cascade.
+				coin_positions.remove(coin_positions.find(coinGridPos))
+			
 			# Update the grid to move coins up if space is freed above.
 			# Sort the inventory by the y coordinate in descending order, then update each coin below.
 			coin_positions.sort_custom(VerticalSorter, "descending_sort")
