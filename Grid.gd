@@ -155,8 +155,9 @@ func deselect_coins(playerPos):
 	
 	# Try to combine the inventory coins with it's new surrounding coins. 
 	# If they are combined, move coins below up by 1 vertical coordinate.
-	combine_coins(inventory_queue[inventory_queue.size()-1].grid_position)
-	
+	# Can't have multiple calls of combine_coins, need to wait until the previous is entirely finished.
+	# To solve this, keep a queue of coins to check for combinations.
+	combo_container.append(inventory_queue[inventory_queue.size()-1].grid_position)
 	
 	# Empty Inventory
 	inventory_queue.clear()
@@ -209,8 +210,6 @@ func combine_coins(worldPos):
 		recursive_coin_check(Vector2(x, y), coin_positions, grid[x][y])
 		# Check to see if length is long enough for completion, then place into the combo container.
 		if coin_positions.size() >= combo_count[grid[x][y]]:
-			#combo_container.append(coin_positions)
-			
 			var coin_type = grid[x][y] + 1
 			# Remove the former coins. If there are coins below the removed ones, update their position to move up.
 			for coinPos in coin_positions:
@@ -276,6 +275,9 @@ func grid_chain_cascade(gridPos):
 		y += 1
 
 func _process(delta):
+	if combo_container.size() > 0:
+		combine_coins(combo_container.pop_front())
+	
 	# Display grid.
 	if Input.is_action_just_pressed("ui_up"):
 		debug_grid()
