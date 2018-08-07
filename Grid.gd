@@ -191,8 +191,15 @@ func spawn_new_coin_row():
 		coin_container.append(new_coin)
 
 # Return true if movement transition is finished.
-func check_coin_transition(gridPos):
+func check_coin_transition_from_grid(gridPos):
 	var worldPos = map_to_world(gridPos) + half_tile_size
+	for coin in coin_container:
+		if coin.grid_position == worldPos:
+			return true
+	return false
+
+# Return true if movement transition is finished.
+func check_coin_transition_from_world(worldPos):
 	for coin in coin_container:
 		if coin.grid_position == worldPos:
 			return true
@@ -205,7 +212,7 @@ func check_coin_transition(gridPos):
 func combine_coins(worldPos):
 	var x = world_to_map(worldPos).x
 	var y = world_to_map(worldPos).y
-	if grid[x][y] != null && check_coin_transition(Vector2(x,y)):
+	if grid[x][y] != null && check_coin_transition_from_grid(Vector2(x,y)):
 		var coin_positions = []
 		recursive_coin_check(Vector2(x, y), coin_positions, grid[x][y])
 		# Check to see if length is long enough for completion, then place into the combo container.
@@ -267,11 +274,11 @@ func recursive_coin_check(mapPos, coinArray, type):
 # Only needs to move by one per call since when a single coin removal will only impact the grid by one unit.
 func grid_chain_cascade(gridPos):
 	var y = gridPos.y
-	while y < grid_size.y:
+	while y < grid_size.y-1:
 		# Update the coin with it's new grid position and the cell of it's new element.
 		for coin in coin_container:
 			if coin.grid_position == (map_to_world(Vector2(gridPos.x, y+1)) + half_tile_size):
-				var worldPos = map_to_world(gridPos) + half_tile_size
+				var worldPos = map_to_world(Vector2(gridPos.x, y)) + half_tile_size
 				remove_from_grid(coin)
 				coin.move_to_pos(worldPos, UP)
 				fill_cell_pos(coin, worldPos)
@@ -279,9 +286,8 @@ func grid_chain_cascade(gridPos):
 
 func _process(delta):
 	if combo_coin_container.size() > 0:
-		print(combo_coin_container.size())
 		# Check to see if coin transition has stopped before attempting to combine.
-		if check_coin_transition(world_to_map(combo_coin_container[0].position)):
+		if check_coin_transition_from_world(combo_coin_container[0].position):
 			combine_coins(combo_coin_container.pop_front().grid_position)
 	
 	# Display grid.
