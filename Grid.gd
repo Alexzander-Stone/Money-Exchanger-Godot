@@ -126,7 +126,7 @@ func select_coins(pos):
 			var coinWorldPos = map_to_world(newPos) + half_tile_size
 			for coin in coin_container:
 				# Verify that the coin hasn't been selected yet.
-				if coin.grid_position.x == coinWorldPos.x && coin.grid_position.y == coinWorldPos.y && !coin.is_selected:
+				if coin.grid_position == coinWorldPos && !coin.is_selected:
 					remove_from_grid(coin)
 					coin.move_to_pos(pos, DOWN)
 					coin.is_selected = true
