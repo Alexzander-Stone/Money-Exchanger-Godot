@@ -101,6 +101,9 @@ func remove_coin(coin):
 	remove_from_grid(coin)
 	coin.queue_free()
 	coin_container.remove(coin_container.find(coin))
+	var index_to_remove = combo_coin_container.find(coin)
+	if index_to_remove != -1:
+		combo_coin_container.remove(index_to_remove)
 
 # Fills cell position with new type based on the given child object.
 # Returns the world coordinates for the new filled cell.
@@ -181,7 +184,7 @@ func spawn_new_coin_row():
 			# Update coin objects.
 			var coinWorldPos = map_to_world(Vector2(reverseGridX, gridY-1)) + half_tile_size
 			for coin in coin_container:
-				if coin.grid_position.x == coinWorldPos.x && coin.grid_position.y == coinWorldPos.y:
+				if coin.grid_position == coinWorldPos:
 					coin.move_to_pos(map_to_world(Vector2(reverseGridX, gridY)) + half_tile_size, DOWN)
 			gridY -= 1
 	# Create the new row of coins. Need to add coin as child as required by the _ready func.
