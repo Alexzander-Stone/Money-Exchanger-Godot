@@ -190,7 +190,7 @@ func spawn_new_coin_row():
 		grid[gridX][0] = new_coin.type
 		coin_container.append(new_coin)
 
-# Return true if movement transition is finished.
+# Return true if movement transition is finished. Uses the grid position as the parameter.
 func check_coin_transition_from_grid(gridPos):
 	var worldPos = map_to_world(gridPos) + half_tile_size
 	for coin in coin_container:
@@ -198,7 +198,7 @@ func check_coin_transition_from_grid(gridPos):
 			return true
 	return false
 
-# Return true if movement transition is finished.
+# Return true if movement transition is finished. Uses the world position as the parameter.
 func check_coin_transition_from_world(worldPos):
 	for coin in coin_container:
 		if coin.grid_position == worldPos:
@@ -253,22 +253,30 @@ func combine_coins(worldPos):
 			return true
 	return false
 
+# Verify that the coin transition has finished before adding to the array.
 func recursive_coin_check(mapPos, coinArray, type):
 	if not coinArray.has(mapPos):
-		coinArray.append(mapPos)
-		var worldPos = map_to_world(mapPos)
-		# Up
-		if(does_cell_exist_at_world(worldPos, UP) && grid[mapPos.x][mapPos.y-1] == type):
-			recursive_coin_check(Vector2(mapPos.x, mapPos.y-1), coinArray, type)
-		# Right
-		if(does_cell_exist_at_world(worldPos, RIGHT) && grid[mapPos.x+1][mapPos.y] == type):
-			recursive_coin_check(Vector2(mapPos.x+1, mapPos.y), coinArray, type)
-		# Down
-		if(does_cell_exist_at_world(worldPos, DOWN) && grid[mapPos.x][mapPos.y+1] == type):
-			recursive_coin_check(Vector2(mapPos.x, mapPos.y+1), coinArray, type)
-		#Left
-		if(does_cell_exist_at_world(worldPos, LEFT) && grid[mapPos.x-1][mapPos.y] == type):
-			recursive_coin_check(Vector2(mapPos.x-1, mapPos.y), coinArray, type)
+		var current_coin
+		for coin in coin_container:
+			if coin.grid_position == map_to_world(mapPos) + half_tile_size:
+				current_coin = coin
+				break
+		
+		if current_coin.position == current_coin.grid_position:
+			coinArray.append(mapPos)
+			var worldPos = map_to_world(mapPos)
+			# Up
+			if(does_cell_exist_at_world(worldPos, UP) && grid[mapPos.x][mapPos.y-1] == type):
+				recursive_coin_check(Vector2(mapPos.x, mapPos.y-1), coinArray, type)
+			# Right
+			if(does_cell_exist_at_world(worldPos, RIGHT) && grid[mapPos.x+1][mapPos.y] == type):
+				recursive_coin_check(Vector2(mapPos.x+1, mapPos.y), coinArray, type)
+			# Down
+			if(does_cell_exist_at_world(worldPos, DOWN) && grid[mapPos.x][mapPos.y+1] == type):
+				recursive_coin_check(Vector2(mapPos.x, mapPos.y+1), coinArray, type)
+			#Left
+			if(does_cell_exist_at_world(worldPos, LEFT) && grid[mapPos.x-1][mapPos.y] == type):
+				recursive_coin_check(Vector2(mapPos.x-1, mapPos.y), coinArray, type)
 
 # Given a position, move all cell entries from below it up by 1 vertical position.
 # Only needs to move by one per call since when a single coin removal will only impact the grid by one unit.
