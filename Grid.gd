@@ -21,6 +21,11 @@ const LEFT = Vector2(-1, 0)
 var coin_container = []
 var inventory_queue = []
 var combo_coin_container = []
+var combo_spawn_location
+# Keeps track of the death processes of each coin.
+var is_comboing = false
+var remaining_number_of_combo_death = 0
+var combo_coins_to_remove = []
 
 onready var Coin = preload("res://Coin.tscn")
 onready var Player = preload("res://Player.tscn")
@@ -94,7 +99,7 @@ func remove_from_grid(child):
 func remove_coin(coin):
 	var worldPos = coin.grid_position
 	remove_from_grid(coin)
-	coin.death()
+	coin.queue_free()
 	coin_container.remove(coin_container.find(coin))
 
 # Fills cell position with new type based on the given child object.
@@ -216,45 +221,65 @@ func combine_coins(worldPos):
 		var coin_positions = []
 		recursive_coin_check(Vector2(x, y), coin_positions, grid[x][y])
 		# Check to see if length is long enough for completion, then place into the combo container.
-		print(coin_positions.size())
 		if coin_positions.size() >= combo_count[grid[x][y]]:
-			var coin_type = grid[x][y] + 1
+			# Spawn location for potential new coin.
+			combo_spawn_location = worldPos
 			# Remove the former coins. If there are coins below the removed ones, update their position to move up.
 			for coinPos in coin_positions:
 				var coinWorldPos = map_to_world(coinPos) + half_tile_size
 				for coin in coin_container:
 					if coin.grid_position == coinWorldPos:
-						remove_coin(coin)
+						coin.start_death(worldPos)
+						combo_coins_to_remove.append(coin)
 						break
-			
-			# Spawn the new coin at given x, but using the highest available y position.
-			# If two or more five hundred were combined, don't spawn new coin.
-			if coin_type < ENTITY_TYPES.size():
-				var new_coin = Coin.instance()
-				new_coin.change_coin_value(coin_type, entity_values[coin_type], entity_names[coin_type])
-				# Find the empty spot above the player.
-				var coinGridPos = world_to_map(worldPos)
-				while is_cell_vacant(map_to_world(coinGridPos), UP):
-					coinGridPos += UP
-				new_coin.set_position(map_to_world(coinGridPos) + half_tile_size)
-				grid[coinGridPos.x][coinGridPos.y] = new_coin.type
-				add_child(new_coin)
-				coin_container.append(new_coin)
-				# Check new coin for potential combos.
-				combo_coin_container.append(new_coin)
-			
-				# Remove the space occupied by the new coin from the cascade.
-				coin_positions.remove(coin_positions.find(coinGridPos))
-			
-			# Update the grid to move coins up if space is freed above.
-			# Sort the inventory by the y coordinate in descending order, then update each coin below.
-			coin_positions.sort_custom(VerticalSorter, "descending_sort")
-			for coinPos in coin_positions:
-				grid_chain_cascade(coinPos)
-			
 			# Combo has succeeded.
 			return true
 	return false
+
+# Creates the combo coin and cascades lower coins. Called during second half of combo phase, 
+# after initial coins have played out their death animation.
+func finish_combo(coins):
+	# Spawn the new coin at given x, but using the highest available y position.
+	# If two or more five hundred were combined, don't spawn new coin.
+	var coin_positions = []
+	for coin in coins:
+		coin_positions.append(world_to_map(coin.grid_position))
+	
+	var worldPos = combo_spawn_location
+	var gridPos = world_to_map(worldPos)
+	var coin_type = grid[gridPos.x][gridPos.y] + 1
+	
+	if coin_type < ENTITY_TYPES.size():
+		var new_coin = Coin.instance()
+		new_coin.change_coin_value(coin_type, entity_values[coin_type], entity_names[coin_type])
+		# Find the empty spot above the player.
+		var coinGridPos = world_to_map(worldPos)
+		while is_cell_vacant(map_to_world(coinGridPos), UP):
+			coinGridPos += UP
+		new_coin.set_position(map_to_world(coinGridPos) + half_tile_size)
+		grid[coinGridPos.x][coinGridPos.y] = new_coin.type
+		add_child(new_coin)
+		coin_container.append(new_coin)
+		# Check new coin for potential combos.
+		combo_coin_container.append(new_coin)
+			
+		# Remove the space occupied by the new coin from the cascade.
+		coin_positions.remove(coin_positions.find(coinGridPos))
+		
+	# Destroy the combo coins.
+	for coin in coins:
+		remove_coin(coin)
+	
+	# Update the grid to move coins up if space is freed above.
+	# Sort the inventory by the y coordinate in descending order, then update each coin below.
+	coin_positions.sort_custom(VerticalSorter, "descending_sort")
+	for coinPos in coin_positions:
+		grid_chain_cascade(coinPos)
+	
+	# Clear the coins to be removed.
+	combo_coins_to_remove.clear()
+	
+	return true
 
 # Verify that the coin transition has finished before adding to the array.
 func recursive_coin_check(mapPos, coinArray, type):
@@ -296,10 +321,15 @@ func grid_chain_cascade(gridPos):
 		y += 1
 
 func _process(delta):
-	if combo_coin_container.size() > 0:
+	# Available combos for consumption and a combo hasn't been initiated.
+	if combo_coin_container.size() > 0 && !is_comboing:
 		# Check to see if coin transition has stopped before attempting to combine.
 		if check_coin_transition_from_world(combo_coin_container[0].position):
-			combine_coins(combo_coin_container.pop_front().grid_position)
+			is_comboing = combine_coins(combo_coin_container.pop_front().grid_position)
+	# Available combos for consumption, but a combo hasn't finished.
+	# When the remaining number of coins dieing has reached zero, finish the combo.
+	elif is_comboing && has_combo_finished():
+		is_comboing = !finish_combo(combo_coins_to_remove)
 	
 	# Display grid.
 	if Input.is_action_just_pressed("ui_up"):
@@ -307,6 +337,13 @@ func _process(delta):
 	# Add a new row to the grid.
 	if Input.is_action_just_pressed("ui_down"):
 		spawn_new_coin_row()
+
+# Returns a boolean that describes the combo death state of the combo coins to remove.
+func has_combo_finished():
+	for coin in combo_coins_to_remove:
+		if coin.is_dead == false:
+			return false
+	return true
 
 func debug_grid():
 	print("-------------------------")
