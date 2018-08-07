@@ -216,6 +216,7 @@ func combine_coins(worldPos):
 		var coin_positions = []
 		recursive_coin_check(Vector2(x, y), coin_positions, grid[x][y])
 		# Check to see if length is long enough for completion, then place into the combo container.
+		print(coin_positions.size())
 		if coin_positions.size() >= combo_count[grid[x][y]]:
 			var coin_type = grid[x][y] + 1
 			# Remove the former coins. If there are coins below the removed ones, update their position to move up.
@@ -239,6 +240,8 @@ func combine_coins(worldPos):
 				grid[coinGridPos.x][coinGridPos.y] = new_coin.type
 				add_child(new_coin)
 				coin_container.append(new_coin)
+				# Check new coin for potential combos.
+				combo_coin_container.append(new_coin)
 			
 				# Remove the space occupied by the new coin from the cascade.
 				coin_positions.remove(coin_positions.find(coinGridPos))
