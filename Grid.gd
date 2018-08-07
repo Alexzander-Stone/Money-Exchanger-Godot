@@ -217,10 +217,12 @@ func check_coin_transition_from_world(worldPos):
 func combine_coins(worldPos):
 	var x = world_to_map(worldPos).x
 	var y = world_to_map(worldPos).y
+	
 	if grid[x][y] != null && check_coin_transition_from_grid(Vector2(x,y)):
 		var coin_positions = []
 		recursive_coin_check(Vector2(x, y), coin_positions, grid[x][y])
 		# Check to see if length is long enough for completion, then place into the combo container.
+		print("grid at " + str(x) + " and " + str(y) + " is size " + str(coin_positions.size()))
 		if coin_positions.size() >= combo_count[grid[x][y]]:
 			# Spawn location for potential new coin.
 			combo_spawn_location = worldPos
@@ -249,6 +251,10 @@ func finish_combo(coins):
 	var gridPos = world_to_map(worldPos)
 	var coin_type = grid[gridPos.x][gridPos.y] + 1
 	
+	# Destroy the combo coins.
+	for coin in coins:
+		remove_coin(coin)
+	
 	if coin_type < ENTITY_TYPES.size():
 		var new_coin = Coin.instance()
 		new_coin.change_coin_value(coin_type, entity_values[coin_type], entity_names[coin_type])
@@ -262,13 +268,9 @@ func finish_combo(coins):
 		coin_container.append(new_coin)
 		# Check new coin for potential combos.
 		combo_coin_container.append(new_coin)
-			
+		
 		# Remove the space occupied by the new coin from the cascade.
 		coin_positions.remove(coin_positions.find(coinGridPos))
-		
-	# Destroy the combo coins.
-	for coin in coins:
-		remove_coin(coin)
 	
 	# Update the grid to move coins up if space is freed above.
 	# Sort the inventory by the y coordinate in descending order, then update each coin below.
@@ -318,6 +320,8 @@ func grid_chain_cascade(gridPos):
 				remove_from_grid(coin)
 				coin.move_to_pos(worldPos, UP)
 				fill_cell_pos(coin, worldPos)
+				if combo_coin_container.find(coin) == -1:
+					combo_coin_container.append(coin)
 		y += 1
 
 func _process(delta):
@@ -325,7 +329,8 @@ func _process(delta):
 	if combo_coin_container.size() > 0 && !is_comboing:
 		# Check to see if coin transition has stopped before attempting to combine.
 		if check_coin_transition_from_world(combo_coin_container[0].position):
-			is_comboing = combine_coins(combo_coin_container.pop_front().grid_position)
+			is_comboing = combine_coins(combo_coin_container[0].grid_position)
+			combo_coin_container.pop_front()
 	# Available combos for consumption, but a combo hasn't finished.
 	# When the remaining number of coins dieing has reached zero, finish the combo.
 	elif is_comboing && has_combo_finished():
@@ -346,12 +351,13 @@ func has_combo_finished():
 	return true
 
 func debug_grid():
-	print("-------------------------")
-	print(str(grid[0][0]) + " | " + str(grid[1][0]) + " | " + str(grid[2][0]) + " | " + str(grid[3][0]))
-	print(str(grid[0][1]) + " | " + str(grid[1][1]) + " | " + str(grid[2][1]) + " | " + str(grid[3][1]))
-	print(str(grid[0][2]) + " | " + str(grid[1][2]) + " | " + str(grid[2][2]) + " | " + str(grid[3][2]))
-	print(str(grid[0][3]) + " | " + str(grid[1][3]) + " | " + str(grid[2][3]) + " | " + str(grid[3][3]))
-	print("-------------------------\n")
+	#print("-------------------------")
+	#print(str(grid[0][0]) + " | " + str(grid[1][0]) + " | " + str(grid[2][0]) + " | " + str(grid[3][0]))
+	#print(str(grid[0][1]) + " | " + str(grid[1][1]) + " | " + str(grid[2][1]) + " | " + str(grid[3][1]))
+	#print(str(grid[0][2]) + " | " + str(grid[1][2]) + " | " + str(grid[2][2]) + " | " + str(grid[3][2]))
+	#print(str(grid[0][3]) + " | " + str(grid[1][3]) + " | " + str(grid[2][3]) + " | " + str(grid[3][3]))
+	#print("-------------------------\n")
+	pass
 	
 class VerticalSorter:
 	static func descending_sort(a, b):
