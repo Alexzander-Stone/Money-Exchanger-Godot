@@ -35,6 +35,13 @@ func _process(delta):
 	# Move towards the grid_position. It has already been verified, 
 	# so no need to check for correctness in grid.
 	if is_moving:
+		# Coin is moving upwards.
+		if position.y - grid_position.y >= 0:
+			target_direction = UP
+		# Coin is moving downwards.
+		else:
+			target_direction = DOWN
+		
 		velocity = MAX_SPEED * target_direction * delta
 		var pos = position
 		var distance_to_target = Vector2(abs(grid_position.x - pos.x), abs(grid_position.y - pos.y))

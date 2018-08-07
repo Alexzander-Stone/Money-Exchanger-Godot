@@ -122,6 +122,10 @@ func select_coins(pos):
 	# Go from the square closest to the player on the bottom to the top.
 	for currentY in range(grid_size.y):
 		var newPos = world_to_map(pos) + Vector2(0, -currentY)
+		# If coin is comboing, break out of loop.
+		if grid[newPos.x][newPos.y] == -1:
+			return false
+		
 		# Found the coin to select in the grid. Next, find the coin 
 		# in the container and change it to a selected status.
 		if grid[newPos.x][newPos.y] != null:
@@ -139,6 +143,7 @@ func select_coins(pos):
 					coin.move_to_pos(pos, DOWN)
 					coin.is_selected = true
 					inventory_queue.push_back(coin)
+	return true
 
 # Release the coins above the passed pos. Empties the inventory when finished. Coin combinations will check during this step.
 func deselect_coins(playerPos):
@@ -225,7 +230,6 @@ func combine_coins(worldPos):
 		var coin_positions = []
 		recursive_coin_check(Vector2(x, y), coin_positions, grid[x][y])
 		# Check to see if length is long enough for completion, then place into the combo container.
-		print("grid at " + str(x) + " and " + str(y) + " is size " + str(coin_positions.size()))
 		if coin_positions.size() >= combo_count[grid[x][y]]:
 			# Spawn location for potential new coin.
 			combo_spawn_location = worldPos
@@ -236,6 +240,7 @@ func combine_coins(worldPos):
 					if coin.grid_position == coinWorldPos:
 						coin.start_death(worldPos)
 						combo_coins_to_remove.append(coin)
+						grid[coinPos.x][coinPos.y] = -1
 						break
 			# Combo has succeeded.
 			return true
@@ -247,12 +252,13 @@ func finish_combo(coins):
 	# Spawn the new coin at given x, but using the highest available y position.
 	# If two or more five hundred were combined, don't spawn new coin.
 	var coin_positions = []
+	var coin_type
 	for coin in coins:
 		coin_positions.append(world_to_map(coin.grid_position))
+		coin_type = coin.type + 1
 	
 	var worldPos = combo_spawn_location
 	var gridPos = world_to_map(worldPos)
-	var coin_type = grid[gridPos.x][gridPos.y] + 1
 	
 	# Destroy the combo coins.
 	for coin in coins:

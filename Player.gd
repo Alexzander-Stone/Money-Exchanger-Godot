@@ -26,8 +26,7 @@ func _process(delta):
 	# Attempt to grab coin from above player character or to push a coin forward.
 	# Will always place immediately at the grid_position.			
 	if Input.is_action_just_pressed("select_coin"):
-		grid.select_coins(grid_position)
-		has_selected = true
+		has_selected = grid.select_coins(grid_position)
 	if Input.is_action_just_pressed("deselect_coin"):
 		if has_selected == true:
 			grid.deselect_coins(grid_position) 
