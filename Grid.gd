@@ -267,13 +267,14 @@ func finish_combo(coins):
 	if coin_type < ENTITY_TYPES.size():
 		var new_coin = Coin.instance()
 		new_coin.change_coin_value(coin_type, entity_values[coin_type], entity_names[coin_type])
+		new_coin.set_position(worldPos)
+		add_child(new_coin)
 		# Find the empty spot above the player.
 		var coinGridPos = world_to_map(worldPos)
 		while is_cell_vacant(map_to_world(coinGridPos), UP):
 			coinGridPos += UP
-		new_coin.set_position(map_to_world(coinGridPos) + half_tile_size)
+		new_coin.move_to_pos(map_to_world(coinGridPos) + half_tile_size, UP)
 		grid[coinGridPos.x][coinGridPos.y] = new_coin.type
-		add_child(new_coin)
 		coin_container.append(new_coin)
 		# Check new coin for potential combos.
 		combo_coin_container.append(new_coin)
