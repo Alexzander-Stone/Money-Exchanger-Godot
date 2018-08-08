@@ -336,10 +336,13 @@ func grid_chain_cascade(gridPos):
 func _process(delta):
 	# Available combos for consumption and a combo hasn't been initiated.
 	if combo_coin_container.size() > 0 && !is_comboing:
-		# Check to see if coin transition has stopped before attempting to combine.
-		if check_coin_transition_from_world(combo_coin_container[0].position):
-			is_comboing = combine_coins(combo_coin_container[0].grid_position)
-			combo_coin_container.pop_front()
+		# Find any combo checks that are available for consumption. Coin transition
+		# needs to be finished before being called.
+		for combo_coin in combo_coin_container:
+			if check_coin_transition_from_world(combo_coin.position):
+				var index = combo_coin_container.find(combo_coin)
+				is_comboing = combine_coins(combo_coin_container[index].grid_position)
+				combo_coin_container.remove(index)
 	# Available combos for consumption, but a combo hasn't finished.
 	# When the remaining number of coins dieing has reached zero, finish the combo.
 	elif is_comboing && has_combo_finished():
