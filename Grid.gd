@@ -343,6 +343,7 @@ func _process(delta):
 				var index = combo_coin_container.find(combo_coin)
 				is_comboing = combine_coins(combo_coin_container[index].grid_position)
 				combo_coin_container.remove(index)
+				break
 	# Available combos for consumption, but a combo hasn't finished.
 	# When the remaining number of coins dieing has reached zero, finish the combo.
 	elif is_comboing && has_combo_finished():
