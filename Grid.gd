@@ -202,6 +202,9 @@ func spawn_new_coin_row():
 		new_coin.move_to_pos(map_to_world(Vector2(gridX, 0)) + half_tile_size, DOWN)
 		grid[gridX][0] = new_coin.type
 		coin_container.append(new_coin)
+	# Increment the spawn location for combo coins if one is being used currently.
+	if combo_spawn_location != null:
+		combo_spawn_location += map_to_world(DOWN)
 
 # Return true if movement transition is finished. Uses the grid position as the parameter.
 func check_coin_transition_from_grid(gridPos):
