@@ -2,15 +2,15 @@
 
 [ext_resource path="res://Coin.gd" type="Script" id=1]
 [ext_resource path="res://Five Hundred.png" type="Texture" id=2]
-[ext_resource path="res://Ten.png" type="Texture" id=3]
+[ext_resource path="res://Five.png" type="Texture" id=3]
 [ext_resource path="res://Hundred.png" type="Texture" id=4]
-[ext_resource path="res://Fifty.png" type="Texture" id=5]
-[ext_resource path="res://Five.png" type="Texture" id=6]
-[ext_resource path="res://One.png" type="Texture" id=7]
-[ext_resource path="res://combo1.png" type="Texture" id=8]
-[ext_resource path="res://combo2.png" type="Texture" id=9]
-[ext_resource path="res://combo3.png" type="Texture" id=10]
-[ext_resource path="res://combo4.png" type="Texture" id=11]
+[ext_resource path="res://combo1.png" type="Texture" id=5]
+[ext_resource path="res://combo2.png" type="Texture" id=6]
+[ext_resource path="res://combo3.png" type="Texture" id=7]
+[ext_resource path="res://combo4.png" type="Texture" id=8]
+[ext_resource path="res://Ten.png" type="Texture" id=9]
+[ext_resource path="res://One.png" type="Texture" id=10]
+[ext_resource path="res://Fifty.png" type="Texture" id=11]
 
 [sub_resource type="SpriteFrames" id=1]
 
@@ -22,7 +22,7 @@ animations = [ {
 }, {
 "frames": [ ExtResource( 3 ) ],
 "loop": true,
-"name": "Ten",
+"name": "Five",
 "speed": 5.0
 }, {
 "frames": [ ExtResource( 4 ) ],
@@ -30,31 +30,31 @@ animations = [ {
 "name": "Hundred",
 "speed": 5.0
 }, {
-"frames": [ ExtResource( 5 ) ],
+"frames": [ ExtResource( 5 ), ExtResource( 6 ), ExtResource( 7 ), ExtResource( 8 ), ExtResource( 7 ), ExtResource( 6 ) ],
 "loop": true,
-"name": "Fifty",
+"name": "Combo",
 "speed": 5.0
 }, {
-"frames": [ ExtResource( 6 ) ],
+"frames": [ ExtResource( 9 ) ],
 "loop": true,
-"name": "Five",
+"name": "Ten",
 "speed": 5.0
 }, {
-"frames": [ ExtResource( 7 ) ],
+"frames": [ ExtResource( 10 ) ],
 "loop": true,
 "name": "One",
 "speed": 5.0
 }, {
-"frames": [ ExtResource( 8 ), ExtResource( 9 ), ExtResource( 10 ), ExtResource( 11 ), ExtResource( 10 ), ExtResource( 9 ) ],
+"frames": [ ExtResource( 11 ) ],
 "loop": true,
-"name": "Combo",
+"name": "Fifty",
 "speed": 5.0
 } ]
 
 [node name="Coin" type="Node2D" index="0"]
 
 script = ExtResource( 1 )
-_sections_unfolded = [ "Transform" ]
+_sections_unfolded = [ "Pause", "Transform", "Visibility", "Z Index" ]
 time_for_death = 1
 
 [node name="AnimatedSprite" type="AnimatedSprite" parent="." index="0"]
@@ -63,14 +63,5 @@ frames = SubResource( 1 )
 animation = "One"
 playing = true
 _sections_unfolded = [ "Transform" ]
-
-[node name="Tween" type="Tween" parent="." index="1"]
-
-repeat = false
-playback_process_mode = 1
-playback_speed = 1.0
-playback/active = false
-playback/repeat = false
-playback/speed = 1.0
 
 
