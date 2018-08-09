@@ -146,7 +146,10 @@ func select_coins(pos):
 	return true
 
 # Release the coins above the passed pos. Empties the inventory when finished. Coin combinations will check during this step.
+# Can only release coins if they have reached the bottom of the grid.
 func deselect_coins(playerPos):
+	if inventory_queue[0].is_moving:
+		return false
 	# Find the the top-most open slot for the initial coin.
 	var coinGridPos = world_to_map(playerPos)
 	while is_cell_vacant(map_to_world(coinGridPos), UP):
@@ -174,6 +177,8 @@ func deselect_coins(playerPos):
 	
 	# Empty Inventory
 	inventory_queue.clear()
+	
+	return true
 
 # Pushes the original coins in the grid down by one cell vertically.
 # Then creates new coin objects at the top of the grid. 

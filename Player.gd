@@ -29,8 +29,7 @@ func _process(delta):
 		has_selected = grid.select_coins(grid_position)
 	if Input.is_action_just_pressed("deselect_coin"):
 		if has_selected == true:
-			grid.deselect_coins(grid_position) 
-			has_selected = false
+			has_selected = !grid.deselect_coins(grid_position) 
 	
 	if Input.is_action_pressed("ui_right"):
 		direction = RIGHT
