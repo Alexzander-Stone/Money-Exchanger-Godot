@@ -129,13 +129,24 @@ func select_coins(pos):
 		# Found the coin to select in the grid. Next, find the coin 
 		# in the container and change it to a selected status.
 		if grid[newPos.x][newPos.y] != null:
+			var coinWorldPos = map_to_world(newPos) + half_tile_size
+			# Coin hasn't finished moving, exit. If there are items already inside the inventory, then return true.
+			# Otherwise false.
+			for coin in coin_container:
+				if coin.grid_position == coinWorldPos && is_coin_moving_at_grid(newPos):
+					if inventory_queue.size() > 0:
+						return true
+					else:
+						return false
+			
 			# Inventory is empty.
 			if grab_type == null:
 				grab_type = grid[newPos.x][newPos.y]
+			
 			# Coin isn't same type as inventory.
 			elif grid[newPos.x][newPos.y] != grab_type:
 				break
-			var coinWorldPos = map_to_world(newPos) + half_tile_size
+			
 			for coin in coin_container:
 				# Verify that the coin hasn't been selected yet.
 				if coin.grid_position == coinWorldPos && !coin.is_selected:
@@ -212,19 +223,19 @@ func spawn_new_coin_row():
 		combo_spawn_location += map_to_world(DOWN)
 
 # Return true if movement transition is finished. Uses the grid position as the parameter.
-func check_coin_transition_from_grid(gridPos):
+func is_coin_moving_at_grid(gridPos):
 	var worldPos = map_to_world(gridPos) + half_tile_size
 	for coin in coin_container:
-		if coin.grid_position == worldPos:
-			return true
-	return false
+		if coin.position == worldPos:
+			return false
+	return true
 
 # Return true if movement transition is finished. Uses the world position as the parameter.
-func check_coin_transition_from_world(worldPos):
+func is_coin_moving_at_world(worldPos):
 	for coin in coin_container:
-		if coin.grid_position == worldPos:
-			return true
-	return false
+		if coin.position == worldPos:
+			return false
+	return true
 
 # Cycle through the grid checking for coin combos. Doesn't start until player places at least one unit down.
 # Coin's aren't valid for consumption until they have reached their grid_position (finished transitioning).
@@ -234,7 +245,7 @@ func combine_coins(worldPos):
 	var x = world_to_map(worldPos).x
 	var y = world_to_map(worldPos).y
 	
-	if grid[x][y] != null && check_coin_transition_from_grid(Vector2(x,y)):
+	if grid[x][y] != null && !is_coin_moving_at_grid(Vector2(x,y)):
 		var coin_positions = []
 		recursive_coin_check(Vector2(x, y), coin_positions, grid[x][y])
 		# Check to see if length is long enough for completion, then place into the combo container.
@@ -348,7 +359,7 @@ func _process(delta):
 		# Find any combo checks that are available for consumption. Coin transition
 		# needs to be finished before being called.
 		for combo_coin in combo_coin_container:
-			if check_coin_transition_from_world(combo_coin.position):
+			if !is_coin_moving_at_world(combo_coin.grid_position):
 				var index = combo_coin_container.find(combo_coin)
 				is_comboing = combine_coins(combo_coin_container[index].grid_position)
 				combo_coin_container.remove(index)

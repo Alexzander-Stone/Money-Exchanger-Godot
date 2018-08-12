@@ -3,7 +3,7 @@ extends Node2D
 var direction = Vector2()
 var velocity
 
-const MAX_SPEED = 800
+const MAX_SPEED = 2000
 const DOWN = Vector2(0, 1)
 const UP = Vector2(0, -1)
 

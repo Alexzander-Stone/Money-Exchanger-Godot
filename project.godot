@@ -14,10 +14,15 @@ config/name="MoneyExchanger"
 run/main_scene="res://Game.tscn"
 config/icon="res://icon.png"
 
+[debug]
+
+settings/fps/force_fps=144
+
 [display]
 
 window/size/width=640
 window/size/height=1000
+window/vsync/use_vsync=false
 
 [input]
 
