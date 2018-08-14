@@ -124,7 +124,10 @@ func select_coins(pos):
 		var newPos = world_to_map(pos) + Vector2(0, -currentY)
 		# If coin is comboing, break out of loop.
 		if grid[newPos.x][newPos.y] == -1:
-			return false
+			if inventory_queue.size() > 0:
+				return true
+			else:
+				return false
 		
 		# Found the coin to select in the grid. Next, find the coin 
 		# in the container and change it to a selected status.
@@ -344,7 +347,7 @@ func grid_chain_cascade(gridPos):
 	while y < grid_size.y-1:
 		# Update the coin with it's new grid position and the cell of it's new element.
 		for coin in coin_container:
-			if coin.grid_position == (map_to_world(Vector2(gridPos.x, y+1)) + half_tile_size):
+			if coin.grid_position == (map_to_world(Vector2(gridPos.x, y+1)) + half_tile_size) && !coin.is_selected:
 				var worldPos = map_to_world(Vector2(gridPos.x, y)) + half_tile_size
 				remove_from_grid(coin)
 				coin.move_to_pos(worldPos, UP)
@@ -371,7 +374,7 @@ func _process(delta):
 	
 	# Display grid.
 	if Input.is_action_just_pressed("ui_up"):
-		debug_grid()
+		debug()
 	# Add a new row to the grid.
 	if Input.is_action_just_pressed("ui_down"):
 		spawn_new_coin_row()
@@ -383,14 +386,16 @@ func has_combo_finished():
 			return false
 	return true
 
-func debug_grid():
+func debug():
 	#print("-------------------------")
 	#print(str(grid[0][0]) + " | " + str(grid[1][0]) + " | " + str(grid[2][0]) + " | " + str(grid[3][0]))
 	#print(str(grid[0][1]) + " | " + str(grid[1][1]) + " | " + str(grid[2][1]) + " | " + str(grid[3][1]))
 	#print(str(grid[0][2]) + " | " + str(grid[1][2]) + " | " + str(grid[2][2]) + " | " + str(grid[3][2]))
 	#print(str(grid[0][3]) + " | " + str(grid[1][3]) + " | " + str(grid[2][3]) + " | " + str(grid[3][3]))
 	#print("-------------------------\n")
-	pass
+	print(inventory_queue.size())
+	print(inventory_queue[0].position)
+	print(inventory_queue[0].is_selected)
 	
 class VerticalSorter:
 	static func descending_sort(a, b):
