@@ -162,7 +162,7 @@ func select_coins(pos):
 # Release the coins above the passed pos. Empties the inventory when finished. Coin combinations will check during this step.
 # Can only release coins if they have reached the bottom of the grid.
 func deselect_coins(playerPos):
-	if inventory_queue[0].is_moving:
+	if inventory_queue[0].current_state_name() == "Move":
 		return false
 	# Find the the top-most open slot for the initial coin.
 	var coinGridPos = world_to_map(playerPos)
@@ -393,9 +393,10 @@ func debug():
 	#print(str(grid[0][2]) + " | " + str(grid[1][2]) + " | " + str(grid[2][2]) + " | " + str(grid[3][2]))
 	#print(str(grid[0][3]) + " | " + str(grid[1][3]) + " | " + str(grid[2][3]) + " | " + str(grid[3][3]))
 	#print("-------------------------\n")
-	print(inventory_queue.size())
-	print(inventory_queue[0].position)
-	print(inventory_queue[0].is_selected)
+	#print(inventory_queue.size())
+	#print(inventory_queue[0].position)
+	#print(inventory_queue[0].is_selected)
+	pass
 	
 class VerticalSorter:
 	static func descending_sort(a, b):

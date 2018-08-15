@@ -12,7 +12,6 @@ var value
 # State Machine, Pushdown automata
 var current_state
 var current_sprite
-var is_moving = false
 var is_selected = false
 var grid_position = Vector2()
 var target_direction = Vector2()
@@ -46,7 +45,6 @@ func release_from_inventory(startingPos):
 
 func move_to_pos(worldPos, dir):
 	grid_position = worldPos
-	is_moving = true
 	
 # Update the value of the coin, and it's appearance.
 func change_coin_value(typ, val, sprite):
@@ -63,3 +61,6 @@ func start_death(worldPos):
 func end_death():
 	# Inform grid that coin is ready for death.
 	is_dead = true
+
+func current_state_name():
+	return $StateMachine.current_state.name

@@ -13,3 +13,10 @@ func update(delta):
 	if owner.grid_position != owner.position:
 		# Finished with current state, go to move state.
 		emit_signal("finished", "move")
+		# This return may cause issues with coins that are immediately placed in the correct spot.
+		return
+	
+	# Hide coin when reaching bottom of grid while selected.
+	# Need to create hidden state.
+	if owner.is_selected:
+			owner.finalize_inventory()

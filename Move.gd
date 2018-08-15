@@ -33,16 +33,9 @@ func update(delta):
 	
 	if abs(velocity.x) > distance_to_target.x:
 		velocity.x = distance_to_target.x * target_direction.x
-		owner.is_moving = false
 	if abs(velocity.y) > distance_to_target.y:
 		velocity.y = distance_to_target.y * target_direction.y
-		owner.is_moving = false
 	owner.position += velocity
-	
-	# Hide coin when reaching bottom of grid while selected.
-	# Need to create hidden state.
-	if owner.is_selected && !owner.is_moving:
-			owner.finalize_inventory()
 
 func update_target_direction(pos, g_pos):
 	if pos > g_pos:
