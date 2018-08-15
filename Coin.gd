@@ -3,7 +3,6 @@ extends Node2D
 var direction = Vector2()
 var velocity
 
-
 const DOWN = Vector2(0, 1)
 const UP = Vector2(0, -1)
 
@@ -45,11 +44,9 @@ func release_from_inventory(startingPos):
 	show()
 	is_selected = false
 	position = startingPos
-	target_direction = UP
 
 func move_to_pos(worldPos, dir):
 	grid_position = worldPos
-	target_direction = dir
 	is_moving = true
 	
 # Update the value of the coin, and it's appearance.
