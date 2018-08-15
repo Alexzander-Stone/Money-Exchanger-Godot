@@ -1,4 +1,4 @@
-extends "res://State.gd"
+extends "res://Live.gd"
 
 # Initialize.
 func enter():

@@ -1,6 +1,6 @@
-extends "res://State.gd"
+extends "res://Live.gd"
 
-const MAX_SPEED = 2000
+const MAX_SPEED = 500
 const DOWN = Vector2(0, 1)
 const UP = Vector2(0, -1)
 
@@ -18,6 +18,8 @@ func handle_input(event):
 # Check to see if the coin should be moving.
 # If so, change states.
 func update(delta):
+	.update(delta)
+	
 	var pos = owner.position
 	var g_pos = owner.grid_position
 	

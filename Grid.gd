@@ -260,7 +260,7 @@ func combine_coins(worldPos):
 				var coinWorldPos = map_to_world(coinPos) + half_tile_size
 				for coin in coin_container:
 					if coin.grid_position == coinWorldPos:
-						coin.start_death(worldPos)
+						coin.start_death()
 						combo_coins_to_remove.append(coin)
 						grid[coinPos.x][coinPos.y] = -1
 						break
