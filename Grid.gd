@@ -154,7 +154,7 @@ func select_coins(pos):
 				# Verify that the coin hasn't been selected yet.
 				if coin.grid_position == coinWorldPos && !coin.is_selected:
 					remove_from_grid(coin)
-					coin.move_to_pos(pos, DOWN)
+					coin.move_to_pos(pos)
 					coin.is_selected = true
 					inventory_queue.push_back(coin)
 	return true
@@ -178,7 +178,7 @@ func deselect_coins(playerPos):
 		coin.release_from_inventory(start_pos)
 		
 		var grid_pos = fill_cell_pos(coin, coinGridPos)
-		coin.move_to_pos(grid_pos, UP)
+		coin.move_to_pos(grid_pos)
 		
 		coinGridPos += map_to_world(DOWN)
 		coin_offset += 1
@@ -209,7 +209,7 @@ func spawn_new_coin_row():
 			var coinWorldPos = map_to_world(Vector2(reverseGridX, gridY-1)) + half_tile_size
 			for coin in coin_container:
 				if coin.grid_position == coinWorldPos:
-					coin.move_to_pos(map_to_world(Vector2(reverseGridX, gridY)) + half_tile_size, DOWN)
+					coin.move_to_pos(map_to_world(Vector2(reverseGridX, gridY)) + half_tile_size)
 			gridY -= 1
 	# Create the new row of coins. Need to add coin as child as required by the _ready func.
 	for gridX in range(grid_size.x):
@@ -218,7 +218,7 @@ func spawn_new_coin_row():
 		new_coin.change_coin_value(coin_type, entity_values[coin_type], entity_names[coin_type])
 		new_coin.set_position(map_to_world(Vector2(gridX, -1)) + half_tile_size)
 		add_child(new_coin)
-		new_coin.move_to_pos(map_to_world(Vector2(gridX, 0)) + half_tile_size, DOWN)
+		new_coin.move_to_pos(map_to_world(Vector2(gridX, 0)) + half_tile_size)
 		grid[gridX][0] = new_coin.type
 		coin_container.append(new_coin)
 	# Increment the spawn location for combo coins if one is being used currently.
@@ -295,7 +295,7 @@ func finish_combo(coins):
 		var coinGridPos = world_to_map(worldPos)
 		while is_cell_vacant(map_to_world(coinGridPos), UP):
 			coinGridPos += UP
-		new_coin.move_to_pos(map_to_world(coinGridPos) + half_tile_size, UP)
+		new_coin.move_to_pos(map_to_world(coinGridPos) + half_tile_size)
 		grid[coinGridPos.x][coinGridPos.y] = new_coin.type
 		coin_container.append(new_coin)
 		# Check new coin for potential combos.
@@ -350,7 +350,7 @@ func grid_chain_cascade(gridPos):
 			if coin.grid_position == (map_to_world(Vector2(gridPos.x, y+1)) + half_tile_size) && !coin.is_selected:
 				var worldPos = map_to_world(Vector2(gridPos.x, y)) + half_tile_size
 				remove_from_grid(coin)
-				coin.move_to_pos(worldPos, UP)
+				coin.move_to_pos(worldPos)
 				fill_cell_pos(coin, worldPos)
 				if combo_coin_container.find(coin) == -1:
 					combo_coin_container.append(coin)

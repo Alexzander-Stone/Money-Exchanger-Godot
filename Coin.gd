@@ -25,19 +25,7 @@ func _ready():
 	death_timer.connect("timeout", self, "end_death")
 	add_child(death_timer)
 
-func _process(delta):
-	pass
-
-# Need to hide coin and remove from grid when reaching bottom. 
-func finalize_inventory():
-	hide()
-
-func release_from_inventory(startingPos):
-	show()
-	is_selected = false
-	position = startingPos
-
-func move_to_pos(worldPos, dir):
+func move_to_pos(worldPos):
 	grid_position = worldPos
 	
 # Update the value of the coin, and it's appearance.
@@ -58,3 +46,12 @@ func end_death():
 
 func current_state_name():
 	return $StateMachine.current_state.name
+
+# Need to hide coin and remove from grid when reaching bottom. 
+func finalize_inventory():
+	hide()
+
+func release_from_inventory(startingPos):
+	show()
+	is_selected = false
+	position = startingPos
