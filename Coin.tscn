@@ -1,16 +1,19 @@
-[gd_scene load_steps=13 format=2]
+[gd_scene load_steps=16 format=2]
 
 [ext_resource path="res://Coin.gd" type="Script" id=1]
 [ext_resource path="res://Five Hundred.png" type="Texture" id=2]
 [ext_resource path="res://Five.png" type="Texture" id=3]
-[ext_resource path="res://Hundred.png" type="Texture" id=4]
+[ext_resource path="res://Ten.png" type="Texture" id=4]
 [ext_resource path="res://combo1.png" type="Texture" id=5]
 [ext_resource path="res://combo2.png" type="Texture" id=6]
 [ext_resource path="res://combo3.png" type="Texture" id=7]
 [ext_resource path="res://combo4.png" type="Texture" id=8]
-[ext_resource path="res://Ten.png" type="Texture" id=9]
-[ext_resource path="res://One.png" type="Texture" id=10]
-[ext_resource path="res://Fifty.png" type="Texture" id=11]
+[ext_resource path="res://One.png" type="Texture" id=9]
+[ext_resource path="res://Fifty.png" type="Texture" id=10]
+[ext_resource path="res://Hundred.png" type="Texture" id=11]
+[ext_resource path="res://CoinStateMachine.gd" type="Script" id=12]
+[ext_resource path="res://Idle.gd" type="Script" id=13]
+[ext_resource path="res://Move.gd" type="Script" id=14]
 
 [sub_resource type="SpriteFrames" id=1]
 
@@ -27,7 +30,7 @@ animations = [ {
 }, {
 "frames": [ ExtResource( 4 ) ],
 "loop": true,
-"name": "Hundred",
+"name": "Ten",
 "speed": 5.0
 }, {
 "frames": [ ExtResource( 5 ), ExtResource( 6 ), ExtResource( 7 ), ExtResource( 8 ), ExtResource( 7 ), ExtResource( 6 ) ],
@@ -37,19 +40,20 @@ animations = [ {
 }, {
 "frames": [ ExtResource( 9 ) ],
 "loop": true,
-"name": "Ten",
+"name": "One",
 "speed": 5.0
 }, {
 "frames": [ ExtResource( 10 ) ],
 "loop": true,
-"name": "One",
+"name": "Fifty",
 "speed": 5.0
 }, {
 "frames": [ ExtResource( 11 ) ],
 "loop": true,
-"name": "Fifty",
+"name": "Hundred",
 "speed": 5.0
 } ]
+_sections_unfolded = [ "Resource" ]
 
 [node name="Coin" type="Node2D" index="0"]
 
@@ -63,5 +67,18 @@ frames = SubResource( 1 )
 animation = "One"
 playing = true
 _sections_unfolded = [ "Transform" ]
+
+[node name="StateMachine" type="Node" parent="." index="1"]
+
+script = ExtResource( 12 )
+START_STATE = NodePath("Idle")
+
+[node name="Idle" type="Node" parent="StateMachine" index="0"]
+
+script = ExtResource( 13 )
+
+[node name="Move" type="Node" parent="StateMachine" index="1"]
+
+script = ExtResource( 14 )
 
 

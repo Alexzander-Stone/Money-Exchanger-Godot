@@ -11,6 +11,9 @@ var grid
 var type
 var value
 
+# State Machine, Pushdown automata
+var current_state
+var current_sprite
 var is_moving = false
 var is_selected = false
 var grid_position = Vector2()
@@ -78,6 +81,7 @@ func change_coin_value(typ, val, sprite):
 	type = typ
 	value = val
 	$AnimatedSprite.animation = sprite
+	current_sprite = sprite
 
 # WorldPos is the location of the spawner coin, this coin will determine when all the coins are removed.
 func start_death(worldPos):
