@@ -4,6 +4,7 @@ const MAX_SPEED = 2000
 const DOWN = Vector2(0, 1)
 const UP = Vector2(0, -1)
 
+var velocity
 var target_direction = DOWN
 
 # Initialize.
@@ -26,17 +27,17 @@ func update(delta):
 	
 	update_target_direction(pos, g_pos)
 	
-	owner.velocity = MAX_SPEED * target_direction * delta
+	velocity = MAX_SPEED * target_direction * delta
 	
 	var distance_to_target = Vector2(abs(g_pos.x - pos.x), abs(g_pos.y - pos.y))
 	
-	if abs(owner.velocity.x) > distance_to_target.x:
-		owner.velocity.x = distance_to_target.x * target_direction.x
+	if abs(velocity.x) > distance_to_target.x:
+		velocity.x = distance_to_target.x * target_direction.x
 		owner.is_moving = false
-	if abs(owner.velocity.y) > distance_to_target.y:
-		owner.velocity.y = distance_to_target.y * target_direction.y
+	if abs(velocity.y) > distance_to_target.y:
+		velocity.y = distance_to_target.y * target_direction.y
 		owner.is_moving = false
-	owner.position += owner.velocity
+	owner.position += velocity
 	
 	# Hide coin when reaching bottom of grid while selected.
 	# Need to create hidden state.

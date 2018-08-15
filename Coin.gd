@@ -1,7 +1,6 @@
 extends Node2D
 
 var direction = Vector2()
-var velocity
 
 const DOWN = Vector2(0, 1)
 const UP = Vector2(0, -1)
