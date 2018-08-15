@@ -23,6 +23,10 @@ func _process(delta):
 	# Reset direction each loop.
 	direction = Vector2()
 	
+	# Debug
+	if Input.is_action_just_pressed("ui_up"):
+		debug()
+	
 	# Attempt to grab coin from above player character or to push a coin forward.
 	# Will always place immediately at the grid_position.			
 	if Input.is_action_just_pressed("select_coin"):
@@ -58,3 +62,6 @@ func _process(delta):
 			is_moving = false
 		
 		position = position + velocity
+
+func debug():
+	print("player has selected is " + str(has_selected))
