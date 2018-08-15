@@ -6,6 +6,7 @@ var value
 
 # State Machine, Pushdown automata
 signal comboed
+signal moved
 
 var current_sprite = "One"
 var is_selected = false
@@ -21,6 +22,7 @@ func _ready():
 
 func move_to_pos(worldPos):
 	grid_position = worldPos
+	emit_signal("moved")
 	
 # Update the value of the coin, and it's appearance.
 func change_coin_value(typ, val, sprite):
@@ -34,10 +36,6 @@ func start_death():
 
 func current_state_name():
 	return $StateMachine.current_state.name
-
-# Need to hide coin and remove from grid when reaching bottom. 
-func finalize_inventory():
-	hide()
 
 func release_from_inventory(startingPos):
 	show()

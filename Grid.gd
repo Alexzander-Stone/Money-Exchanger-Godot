@@ -117,7 +117,7 @@ func fill_cell_pos(child, pos):
 # If it already has coins within, it will grab coins of the same type. 
 func select_coins(pos):
 	var grab_type = null
-	if(inventory_queue.size() > 0):
+	if(inventory_queue.size() > 0): 
 		grab_type = inventory_queue[0].type
 	# Go from the square closest to the player on the bottom to the top.
 	for currentY in range(grid_size.y):
@@ -154,6 +154,7 @@ func select_coins(pos):
 				# Verify that the coin hasn't been selected yet.
 				if coin.grid_position == coinWorldPos && !coin.is_selected:
 					remove_from_grid(coin)
+					# Move to below player.
 					coin.move_to_pos(pos + Vector2(0, tile_size.y))
 					coin.is_selected = true
 					inventory_queue.push_back(coin)
