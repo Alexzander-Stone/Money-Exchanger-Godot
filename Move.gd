@@ -11,6 +11,7 @@ var target_direction = DOWN
 func enter():
 	owner.get_node("AnimatedSprite").play("Moving")
 	update_target_direction(owner.position, owner.grid_position)
+	.enter()
 
 func handle_input(event):
 	return .handle_input(event)

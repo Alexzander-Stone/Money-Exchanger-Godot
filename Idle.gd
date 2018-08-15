@@ -4,10 +4,12 @@ extends "res://Live.gd"
 func enter():
 	owner.get_node("AnimatedSprite").play(owner.current_sprite)
 	owner.connect("moved", self, "on_movement")
+	.enter()
 
 # Reset values.
 func exit():
 	owner.disconnect("moved", self, "on_movement")
+	.exit()
 
 func handle_input(event):
 	return .handle_input(event)
