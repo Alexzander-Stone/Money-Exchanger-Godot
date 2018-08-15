@@ -20,16 +20,16 @@ func _ready():
 	grid = get_parent()
 	grid_position = position
 
-func move_to_pos(worldPos):
-	grid_position = worldPos
-	emit_signal("moved")
-	
 # Update the value of the coin, and it's appearance.
 func change_coin_value(typ, val, sprite):
 	type = typ
 	value = val
 	$AnimatedSprite.animation = sprite
 	current_sprite = sprite
+
+func move_to_pos(worldPos):
+	grid_position = worldPos
+	emit_signal("moved")
 
 func start_death():
 	emit_signal("comboed")
