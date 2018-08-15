@@ -5,7 +5,7 @@ const DOWN = Vector2(0, 1)
 const UP = Vector2(0, -1)
 
 var velocity
-var target_direction = DOWN
+var target_direction
 
 # Initialize.
 func enter():
@@ -19,8 +19,6 @@ func handle_input(event):
 # Check to see if the coin should be moving.
 # If so, change states.
 func update(delta):
-	.update(delta)
-	
 	var pos = owner.position
 	var g_pos = owner.grid_position
 	
