@@ -2,12 +2,12 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/combo3.png-33592e0e3f0c160709bfa7be06d2354a.stex"
+path="res://.import/Fifty.png-5ef1494f448f1d0c3c3049760c26924e.stex"
 
 [deps]
 
-source_file="res://combo3.png"
-dest_files=[ "res://.import/combo3.png-33592e0e3f0c160709bfa7be06d2354a.stex" ]
+source_file="res://Coin/Sprites/Fifty.png"
+dest_files=[ "res://.import/Fifty.png-5ef1494f448f1d0c3c3049760c26924e.stex" ]
 
 [params]
 

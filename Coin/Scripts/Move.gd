@@ -1,4 +1,4 @@
-extends "res://Live.gd"
+extends "res://Coin/Scripts/Live.gd"
 
 const MAX_SPEED = 500
 const DOWN = Vector2(0, 1)

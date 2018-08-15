@@ -1,4 +1,4 @@
-extends "res://State.gd"
+extends "res://State Machine/State.gd"
 
 export (int) var time_for_death
 var death_timer

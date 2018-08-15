@@ -1,21 +1,26 @@
 [gd_scene load_steps=18 format=2]
 
-[ext_resource path="res://Coin.gd" type="Script" id=1]
-[ext_resource path="res://Five Hundred.png" type="Texture" id=2]
-[ext_resource path="res://Five.png" type="Texture" id=3]
-[ext_resource path="res://Ten.png" type="Texture" id=4]
-[ext_resource path="res://combo1.png" type="Texture" id=5]
-[ext_resource path="res://combo2.png" type="Texture" id=6]
-[ext_resource path="res://combo3.png" type="Texture" id=7]
-[ext_resource path="res://combo4.png" type="Texture" id=8]
-[ext_resource path="res://One.png" type="Texture" id=9]
-[ext_resource path="res://Fifty.png" type="Texture" id=10]
-[ext_resource path="res://Hundred.png" type="Texture" id=11]
-[ext_resource path="res://Moving.png" type="Texture" id=12]
-[ext_resource path="res://CoinStateMachine.gd" type="Script" id=13]
-[ext_resource path="res://Idle.gd" type="Script" id=14]
-[ext_resource path="res://Move.gd" type="Script" id=15]
-[ext_resource path="res://Death.gd" type="Script" id=16]
+[ext_resource path="res://Coin/Scripts/Coin.gd" type="Script" id=1]
+[ext_resource path="res://Coin/Sprites/Five Hundred.png" type="Texture" id=2]
+[ext_resource path="res://Coin/Sprites/Five.png" type="Texture" id=3]
+[ext_resource path="res://Coin/Sprites/Ten.png" type="Texture" id=4]
+[ext_resource path="res://Coin/Sprites/combo1.png" type="Texture" id=5]
+[ext_resource path="res://Coin/Sprites/combo2.png" type="Texture" id=6]
+[ext_resource path="res://Coin/Sprites/combo3.png" type="Texture" id=7]
+[ext_resource path="res://Coin/Sprites/combo4.png" type="Texture" id=8]
+[ext_resource path="res://Coin/Sprites/One.png" type="Texture" id=9]
+[ext_resource path="res://Coin/Sprites/Fifty.png" type="Texture" id=10]
+[ext_resource path="res://Coin/Sprites/Hundred.png" type="Texture" id=11]
+[ext_resource path="res://Coin/Sprites/Moving.png" type="Texture" id=12]
+[ext_resource path="res://Coin/Scripts/CoinStateMachine.gd" type="Script" id=13]
+[ext_resource path="res://Coin/Scripts/Idle.gd" type="Script" id=14]
+[ext_resource path="res://Coin/Scripts/Move.gd" type="Script" id=15]
+[ext_resource path="res://Coin/Scripts/Death.gd" type="Script" id=16]
+
+
+
+
+
 
 [sub_resource type="SpriteFrames" id=1]
 

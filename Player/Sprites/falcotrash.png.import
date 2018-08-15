@@ -2,12 +2,12 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/Five.png-518ceae0712c4c3ee841603fee94790a.stex"
+path="res://.import/falcotrash.png-27e50503e900f65fa991ad13eef16021.stex"
 
 [deps]
 
-source_file="res://Five.png"
-dest_files=[ "res://.import/Five.png-518ceae0712c4c3ee841603fee94790a.stex" ]
+source_file="res://Player/Sprites/falcotrash.png"
+dest_files=[ "res://.import/falcotrash.png-27e50503e900f65fa991ad13eef16021.stex" ]
 
 [params]
 

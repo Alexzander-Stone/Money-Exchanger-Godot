@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=2]
 
-[ext_resource path="res://Grid.gd" type="Script" id=1]
-[ext_resource path="res://Grid Visualizer.gd" type="Script" id=2]
+[ext_resource path="res://Grid/Scripts/Grid.gd" type="Script" id=1]
+[ext_resource path="res://Grid/Scripts/Grid Visualizer.gd" type="Script" id=2]
 
 [node name="Game" type="Node" index="0"]
 
@@ -27,7 +27,7 @@ format = 1
 tile_data = PoolIntArray(  )
 script = ExtResource( 1 )
 _sections_unfolded = [ "Transform" ]
-grid_size = Vector2( 8, 10 )
+grid_size = Vector2( 6, 8 )
 
 [node name="Grid Visualizer" type="Node2D" parent="Grid" index="0"]
 

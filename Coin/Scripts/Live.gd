@@ -1,4 +1,4 @@
-extends "res://State.gd"
+extends "res://State Machine/State.gd"
 
 func enter():
 	owner.connect("comboed", self, "on_combo")

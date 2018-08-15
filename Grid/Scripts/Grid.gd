@@ -27,8 +27,8 @@ var is_comboing = false
 var remaining_number_of_combo_death = 0
 var combo_coins_to_remove = []
 
-onready var Coin = preload("res://Coin.tscn")
-onready var Player = preload("res://Player.tscn")
+onready var Coin = preload("res://Coin/Coin.tscn")
+onready var Player = preload("res://Player/Player.tscn")
 
 func _ready():
 	for x in range(grid_size.x):

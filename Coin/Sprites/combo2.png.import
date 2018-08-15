@@ -2,12 +2,12 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/falcotrash.png-7de03b692cf28765a9b9f58e32afda33.stex"
+path="res://.import/combo2.png-cd58bd6325f5368ecc6d0b93b28b6e54.stex"
 
 [deps]
 
-source_file="res://falcotrash.png"
-dest_files=[ "res://.import/falcotrash.png-7de03b692cf28765a9b9f58e32afda33.stex" ]
+source_file="res://Coin/Sprites/combo2.png"
+dest_files=[ "res://.import/combo2.png-cd58bd6325f5368ecc6d0b93b28b6e54.stex" ]
 
 [params]
 

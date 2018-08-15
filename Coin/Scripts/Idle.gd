@@ -1,4 +1,4 @@
-extends "res://Live.gd"
+extends "res://Coin/Scripts/Live.gd"
 
 # Initialize.
 func enter():
