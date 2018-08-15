@@ -9,7 +9,7 @@ var target_direction = DOWN
 
 # Initialize.
 func enter():
-	owner.get_node("AnimatedSprite").play("Combo")
+	owner.get_node("AnimatedSprite").play("Moving")
 	update_target_direction(owner.position, owner.grid_position)
 
 func handle_input(event):

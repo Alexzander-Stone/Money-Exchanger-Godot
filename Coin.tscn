@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=2]
+[gd_scene load_steps=17 format=2]
 
 [ext_resource path="res://Coin.gd" type="Script" id=1]
 [ext_resource path="res://Five Hundred.png" type="Texture" id=2]
@@ -11,9 +11,10 @@
 [ext_resource path="res://One.png" type="Texture" id=9]
 [ext_resource path="res://Fifty.png" type="Texture" id=10]
 [ext_resource path="res://Hundred.png" type="Texture" id=11]
-[ext_resource path="res://CoinStateMachine.gd" type="Script" id=12]
-[ext_resource path="res://Idle.gd" type="Script" id=13]
-[ext_resource path="res://Move.gd" type="Script" id=14]
+[ext_resource path="res://Moving.png" type="Texture" id=12]
+[ext_resource path="res://CoinStateMachine.gd" type="Script" id=13]
+[ext_resource path="res://Idle.gd" type="Script" id=14]
+[ext_resource path="res://Move.gd" type="Script" id=15]
 
 [sub_resource type="SpriteFrames" id=1]
 
@@ -52,6 +53,11 @@ animations = [ {
 "loop": true,
 "name": "Hundred",
 "speed": 5.0
+}, {
+"frames": [ ExtResource( 12 ) ],
+"loop": true,
+"name": "Moving",
+"speed": 5.0
 } ]
 _sections_unfolded = [ "Resource" ]
 
@@ -70,15 +76,15 @@ _sections_unfolded = [ "Transform" ]
 
 [node name="StateMachine" type="Node" parent="." index="1"]
 
-script = ExtResource( 12 )
+script = ExtResource( 13 )
 START_STATE = NodePath("Idle")
 
 [node name="Idle" type="Node" parent="StateMachine" index="0"]
 
-script = ExtResource( 13 )
+script = ExtResource( 14 )
 
 [node name="Move" type="Node" parent="StateMachine" index="1"]
 
-script = ExtResource( 14 )
+script = ExtResource( 15 )
 
 
