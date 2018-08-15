@@ -1,17 +1,11 @@
 extends Node2D
 
-var direction = Vector2()
-
-const DOWN = Vector2(0, 1)
-const UP = Vector2(0, -1)
-
 var grid
 var type
 var value
 
 # State Machine, Pushdown automata
-var current_state
-var current_sprite
+var current_sprite = "One"
 var is_selected = false
 var grid_position = Vector2()
 var target_direction = Vector2()
