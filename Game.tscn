@@ -27,7 +27,7 @@ format = 1
 tile_data = PoolIntArray(  )
 script = ExtResource( 1 )
 _sections_unfolded = [ "Transform" ]
-grid_size = Vector2( 8, 15 )
+grid_size = Vector2( 8, 10 )
 
 [node name="Grid Visualizer" type="Node2D" parent="Grid" index="0"]
 

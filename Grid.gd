@@ -154,7 +154,7 @@ func select_coins(pos):
 				# Verify that the coin hasn't been selected yet.
 				if coin.grid_position == coinWorldPos && !coin.is_selected:
 					remove_from_grid(coin)
-					coin.move_to_pos(pos)
+					coin.move_to_pos(pos + Vector2(0, tile_size.y))
 					coin.is_selected = true
 					inventory_queue.push_back(coin)
 	return true
