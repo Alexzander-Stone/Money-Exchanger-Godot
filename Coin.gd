@@ -3,7 +3,7 @@ extends Node2D
 var direction = Vector2()
 var velocity
 
-const MAX_SPEED = 2000
+
 const DOWN = Vector2(0, 1)
 const UP = Vector2(0, -1)
 
@@ -35,31 +35,7 @@ func _ready():
 	add_child(death_timer)
 
 func _process(delta):
-	# Move towards the grid_position. It has already been verified, 
-	# so no need to check for correctness in grid.
-	if is_moving:
-		# Coin is moving upwards.
-		if position.y - grid_position.y >= 0:
-			target_direction = UP
-		# Coin is moving downwards.
-		else:
-			target_direction = DOWN
-		
-		velocity = MAX_SPEED * target_direction * delta
-		var pos = position
-		var distance_to_target = Vector2(abs(grid_position.x - pos.x), abs(grid_position.y - pos.y))
-		
-		if abs(velocity.x) > distance_to_target.x:
-			velocity.x = distance_to_target.x * target_direction.x
-			is_moving = false
-		if abs(velocity.y) > distance_to_target.y:
-			velocity.y = distance_to_target.y * target_direction.y
-			is_moving = false
-		position += velocity
-		
-	# Hide coin when reaching bottom of grid while selected.
-	if is_selected && !is_moving:
-			finalize_inventory()
+	pass
 
 # Need to hide coin and remove from grid when reaching bottom. 
 func finalize_inventory():
