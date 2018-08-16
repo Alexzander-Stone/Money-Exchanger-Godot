@@ -18,9 +18,9 @@ Deselect coins - X key.
 ## Testing Program
 Simple tutorial for testing the game inside the Godot 3.0 engine within the Windows 10 environment.
 ### Prerequisites
-Download Godot 3.05 from either of the links.
+Download Godot 3.0.5 from either of the links.
 
-* [Godot V3.05](https://godotengine.org/download/windows) - Godot official download page.
+* [Godot Download](https://godotengine.org/download/windows) - Godot official download page.
 * [Godot Previous Releases](https://downloads.tuxfamily.org/godotengine/) - Godot official previous release list.
 ### Running
 After installation, run the Godot game engine.
