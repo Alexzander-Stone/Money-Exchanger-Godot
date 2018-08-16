@@ -1,45 +1,42 @@
-extends "res://Coin/Scripts/Live.gd"
+extends "res://State Machine/State.gd"
 
-const MAX_SPEED = 500
-const DOWN = Vector2(0, 1)
-const UP = Vector2(0, -1)
+const MAX_SPEED = 400
+const RIGHT = Vector2(1, 0)
+const LEFT = Vector2(-1, 0)
 
 var velocity
 var target_direction
 
 # Initialize.
 func enter():
-	owner.get_node("AnimatedSprite").play("Moving")
+	# Find the grid position to move towards.
 	update_target_direction(owner.position, owner.grid_position)
+	print(target_direction)
+	if owner.grid.does_cell_exist_at_world(owner.position, target_direction):
+		owner.grid_position = owner.grid.directed_nearby_pos(owner, target_direction)
 	.enter()
 
-func handle_input(event):
-	return .handle_input(event)
-
-# Check to see if the coin should be moving.
-# If so, change states.
 func update(delta):
 	var pos = owner.position
 	var g_pos = owner.grid_position
 	
-	# No longer moving, go to idle.
 	if g_pos == pos:
 		emit_signal("finished", "idle")
 	
-	update_target_direction(pos, g_pos)
-	
+	# Move towards the goal
 	velocity = MAX_SPEED * target_direction * delta
-	
+		
 	var distance_to_target = Vector2(abs(g_pos.x - pos.x), abs(g_pos.y - pos.y))
-	
+		
 	if abs(velocity.x) > distance_to_target.x:
 		velocity.x = distance_to_target.x * target_direction.x
 	if abs(velocity.y) > distance_to_target.y:
 		velocity.y = distance_to_target.y * target_direction.y
-	owner.position += velocity
+		
+	owner.position = owner.position + velocity
 
 func update_target_direction(pos, g_pos):
-	if pos.y > g_pos.y:
-		target_direction = UP
+	if Input.is_action_pressed("ui_right"):
+		target_direction = RIGHT
 	else:
-		target_direction = DOWN
+		target_direction = LEFT

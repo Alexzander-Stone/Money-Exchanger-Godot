@@ -83,9 +83,9 @@ func update_child_pos(child):
 	return targetPos
 
 # Returns a nearby world position in reference to the passed child's position in the grid.
-func directed_nearby_pos(child):
+func directed_nearby_pos(child, direction):
 	var gridPos = world_to_map(child.get_position())
-	var newGridPos = gridPos + child.direction
+	var newGridPos = gridPos + direction
 	
 	var targetPos = map_to_world(newGridPos) + half_tile_size
 	return targetPos
