@@ -3,7 +3,17 @@
 Simple 2D clone of the Neo Geo MVS arcade game, Money Idol Exchanger. 
 The project was created to increase my knowledge of the Godot game engine and common game design principles.
 
+## Gameplay
+Your player character moves horizontally across the bottom of the grid while selecting and deselecting coins into new cells.
+Once deselected, the coins will move upwards towards their new cell location. If a combination of coins that satisfy the 
+requirements of combining to the next highest coin type are available, the coins will transform to the new type.
+
 ## Controls
+Movement - Arrow keys.
+
+Select/Grab coins - Z key.
+
+Deselect coins - X key.
 
 ## Testing Program
 Simple tutorial for testing the game inside the Godot 3.0 engine within the Windows 10 environment.
@@ -34,3 +44,7 @@ State Machines -
 	Coin uses the pushdown automaton.
 	
 	Player uses a simple FSM.
+
+## Acknowledgments
+
+* [Nathan Lovato](http://gdquest.com/) - Godot content creator with great tutorials covering various game design topics.
