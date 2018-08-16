@@ -156,7 +156,7 @@ func select_coins(pos):
 					remove_from_grid(coin)
 					# Move to below player.
 					coin.move_to_pos(pos + Vector2(0, tile_size.y))
-					coin.is_selected = true
+					coin.select()
 					inventory_queue.push_back(coin)
 	return true
 

@@ -41,3 +41,6 @@ func release_from_inventory(startingPos):
 	show()
 	is_selected = false
 	position = startingPos
+
+func select():
+	is_selected = true
