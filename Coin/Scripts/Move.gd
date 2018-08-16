@@ -4,7 +4,6 @@ const MAX_SPEED = 500
 const DOWN = Vector2(0, 1)
 const UP = Vector2(0, -1)
 
-var velocity
 var target_direction
 
 # Initialize.
@@ -28,7 +27,7 @@ func update(delta):
 	
 	update_target_direction(pos, g_pos)
 	
-	velocity = MAX_SPEED * target_direction * delta
+	var velocity = MAX_SPEED * target_direction * delta
 	
 	var distance_to_target = Vector2(abs(g_pos.x - pos.x), abs(g_pos.y - pos.y))
 	

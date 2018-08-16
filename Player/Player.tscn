@@ -3,8 +3,8 @@
 [ext_resource path="res://Player/Scripts/Player.gd" type="Script" id=1]
 [ext_resource path="res://Player/Sprites/falcotrash.png" type="Texture" id=2]
 [ext_resource path="res://Player/Scripts/PlayerStateMachine.gd" type="Script" id=3]
-[ext_resource path="res://Player/Idle.gd" type="Script" id=4]
-[ext_resource path="res://Player/Move.gd" type="Script" id=5]
+[ext_resource path="res://Player/Scripts/Idle.gd" type="Script" id=4]
+[ext_resource path="res://Player/Scripts/Move.gd" type="Script" id=5]
 
 [sub_resource type="SpriteFrames" id=1]
 
