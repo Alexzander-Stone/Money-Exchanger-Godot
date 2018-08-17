@@ -1,9 +1,10 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://Grid/Scripts/Grid.gd" type="Script" id=1]
 [ext_resource path="res://Grid/Scripts/Grid Visualizer.gd" type="Script" id=2]
+[ext_resource path="res://Coin Interaction.gd" type="Script" id=3]
 
-[node name="Game" type="Node"]
+[node name="Game" type="Node" index="0"]
 
 [node name="Grid" type="TileMap" parent="." index="0"]
 
@@ -32,5 +33,9 @@ grid_size = Vector2( 6, 8 )
 [node name="Grid Visualizer" type="Node2D" parent="Grid" index="0"]
 
 script = ExtResource( 2 )
+
+[node name="Coin Interaction" type="Node" parent="Grid" index="1"]
+
+script = ExtResource( 3 )
 
 
