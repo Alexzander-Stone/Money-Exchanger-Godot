@@ -24,9 +24,6 @@ const LEFT = Vector2(-1, 0)
 var coin_container = []
 var combo_coin_container = []
 
-
-var remaining_number_of_combo_death = 0
-
 onready var Coin = preload("res://Coin/Coin.tscn")
 
 func _ready():
@@ -38,7 +35,8 @@ func _ready():
 	for x in range(grid_size.x):
 		for y in range(grid_size.y/2):
 			var coin_type = ENTITY_TYPES.values()[randi() % 6]
-			var new_coin = spawn_coin(coin_type, map_to_world(Vector2(x,y)) + half_tile_size)
+			var coin_pos = map_to_world(Vector2(x,y)) + half_tile_size
+			var new_coin = spawn_coin(coin_type, coin_pos)
 
 func _process(delta):
 	# TESTING
@@ -62,18 +60,6 @@ func is_cell_vacant(pos, direction):
 		if grid[newPos.x][newPos.y] == null:
 			return true
 	return false
-
-# Updates the grid with new location of the child, and returns 
-# the world position for it's new cell location.
-func update_child_pos(child):
-	# Reset former cell and update new grid cell.
-	var gridPos = world_to_map(child.get_position())
-	grid[gridPos.x][gridPos.y] = null
-	var newGridPos = gridPos + child.direction
-	grid[newGridPos.x][newGridPos.y] = child.type
-	
-	var targetPos = map_to_world(newGridPos) + half_tile_size
-	return targetPos
 
 # Erase a grid cell's contents.
 func remove_from_grid(child):
