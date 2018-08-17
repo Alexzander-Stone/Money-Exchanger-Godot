@@ -27,11 +27,10 @@ func _process(delta):
 		# Find any combo checks that are available for consumption. Coin transition
 		# needs to be finished before being called.
 		for combo_coin in combo_coin_container:
-			if !grid.is_coin_moving_at_world(combo_coin.grid_position):
+			if  is_comboing == false && !grid.is_coin_moving_at_world(combo_coin.grid_position):
 				var index = combo_coin_container.find(combo_coin)
 				is_comboing = combine_coins(combo_coin_container[index].grid_position)
 				combo_coin_container.remove(index)
-				break
 	# Available combos for consumption, but a combo hasn't finished.
 	# When the remaining number of coins dieing has reached zero, finish the combo.
 	elif is_comboing && has_combo_finished():
@@ -97,7 +96,8 @@ func finish_combo(coins):
 		add_combo_for(coin)
 		
 		# Remove the space occupied by the new coin from the cascade.
-		var index = coin_positions.find(coin.grid_position)
+		var index = coin_positions.find(grid.world_to_map(coin.grid_position))
+		print(index)
 		if index != -1:
 			coin_positions.remove(index)
 	

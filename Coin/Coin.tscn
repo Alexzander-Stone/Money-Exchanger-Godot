@@ -2,10 +2,10 @@
 
 [ext_resource path="res://Coin/Scripts/Coin.gd" type="Script" id=1]
 [ext_resource path="res://Coin/Sprites/Five Hundred.png" type="Texture" id=2]
-[ext_resource path="res://Coin/Sprites/Hundred.png" type="Texture" id=3]
-[ext_resource path="res://Coin/Sprites/Moving.png" type="Texture" id=4]
+[ext_resource path="res://Coin/Sprites/Ten.png" type="Texture" id=3]
+[ext_resource path="res://Coin/Sprites/Hundred.png" type="Texture" id=4]
 [ext_resource path="res://Coin/Sprites/Five.png" type="Texture" id=5]
-[ext_resource path="res://Coin/Sprites/Ten.png" type="Texture" id=6]
+[ext_resource path="res://Coin/Sprites/Moving.png" type="Texture" id=6]
 [ext_resource path="res://Coin/Sprites/One.png" type="Texture" id=7]
 [ext_resource path="res://Coin/Sprites/combo1.png" type="Texture" id=8]
 [ext_resource path="res://Coin/Sprites/combo2.png" type="Texture" id=9]
@@ -27,12 +27,12 @@ animations = [ {
 }, {
 "frames": [ ExtResource( 3 ) ],
 "loop": true,
-"name": "Hundred",
+"name": "Ten",
 "speed": 5.0
 }, {
 "frames": [ ExtResource( 4 ) ],
 "loop": true,
-"name": "Moving",
+"name": "Hundred",
 "speed": 5.0
 }, {
 "frames": [ ExtResource( 5 ) ],
@@ -42,7 +42,7 @@ animations = [ {
 }, {
 "frames": [ ExtResource( 6 ) ],
 "loop": true,
-"name": "Ten",
+"name": "Moving",
 "speed": 5.0
 }, {
 "frames": [ ExtResource( 7 ) ],
@@ -62,7 +62,7 @@ animations = [ {
 } ]
 _sections_unfolded = [ "Resource" ]
 
-[node name="Coin" type="Node2D"]
+[node name="Coin" type="Node2D" index="0"]
 
 script = ExtResource( 1 )
 _sections_unfolded = [ "Pause", "Transform", "Visibility", "Z Index" ]
