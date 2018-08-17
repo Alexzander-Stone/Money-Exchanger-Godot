@@ -283,9 +283,6 @@ func _process(delta):
 	elif is_comboing && has_combo_finished():
 		is_comboing = !finish_combo(combo_coins_to_remove)
 	
-	# Display grid.
-	if Input.is_action_just_pressed("ui_up"):
-		debug()
 	# Add a new row to the grid.
 	if Input.is_action_just_pressed("ui_down"):
 		spawn_new_coin_row()
@@ -297,18 +294,6 @@ func has_combo_finished():
 			return false
 	return true
 
-func debug():
-	#print("-------------------------")
-	#print(str(grid[0][0]) + " | " + str(grid[1][0]) + " | " + str(grid[2][0]) + " | " + str(grid[3][0]))
-	#print(str(grid[0][1]) + " | " + str(grid[1][1]) + " | " + str(grid[2][1]) + " | " + str(grid[3][1]))
-	#print(str(grid[0][2]) + " | " + str(grid[1][2]) + " | " + str(grid[2][2]) + " | " + str(grid[3][2]))
-	#print(str(grid[0][3]) + " | " + str(grid[1][3]) + " | " + str(grid[2][3]) + " | " + str(grid[3][3]))
-	#print("-------------------------\n")
-	#print(inventory_queue.size())
-	#print(inventory_queue[0].position)
-	#print(inventory_queue[0].is_selected)
-	pass
-	
 class VerticalSorter:
 	static func descending_sort(a, b):
 		if a.y > b.y:
