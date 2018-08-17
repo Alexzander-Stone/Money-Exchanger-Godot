@@ -39,8 +39,6 @@ func _ready():
 		for y in range(grid_size.y/2):
 			var coin_type = ENTITY_TYPES.values()[randi() % 6]
 			var new_coin = spawn_coin(coin_type, map_to_world(Vector2(x,y)) + half_tile_size)
-			add_child(new_coin)
-			coin_container.append(new_coin)
 
 func _process(delta):
 	# TESTING
@@ -100,10 +98,14 @@ func spawn_coin(coin_type, worldPos):
 	var coinGridPos = world_to_map(worldPos)
 	while is_cell_vacant(map_to_world(coinGridPos), UP):
 		coinGridPos += UP
+	
+	# Give illusion of coin falling up by placing into a starting position, then immediately giving it
+	# another free cell above to move towards.
 	new_coin.move_to_pos(map_to_world(coinGridPos) + half_tile_size)
 	grid[coinGridPos.x][coinGridPos.y] = new_coin.type
 	coin_container.append(new_coin)
 	return new_coin
+
 
 # Remove a coin from the cell and destroy it. Update any coins below to move up if needed.
 func remove_coin(coin):

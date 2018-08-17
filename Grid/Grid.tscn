@@ -6,7 +6,7 @@
 [ext_resource path="res://Grid/Scripts/Combo Interaction.gd" type="Script" id=4]
 [ext_resource path="res://Grid/Scripts/Coin Spawner.gd" type="Script" id=5]
 
-[node name="Grid" type="TileMap" index="0"]
+[node name="Grid" type="TileMap"]
 
 mode = 0
 tile_set = null
