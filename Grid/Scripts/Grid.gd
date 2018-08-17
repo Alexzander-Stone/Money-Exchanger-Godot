@@ -4,14 +4,14 @@ var tile_size = get_cell_size()
 var half_tile_size = tile_size/2
 
 enum ENTITY_TYPES {ONE, FIVE, TEN, FIFTY, HUN, FHUN}
-var entity_names = ["One", "Five", "Ten", "Fifty", "Hundred", "Five Hundred"]
-var entity_values = [1, 5, 10, 50, 100, 500]
-var combo_count = [5, 2, 5, 2, 5, 2]
+const entity_names = ["One", "Five", "Ten", "Fifty", "Hundred", "Five Hundred"]
+const entity_values = [1, 5, 10, 50, 100, 500]
+const combo_count = [5, 2, 5, 2, 5, 2]
 
 # Grid contains the entity types, NOT the coordinates. Coordinates are determine through
 # the row/col and the use of map_to_world. World_to_map converts world positions to grid/coordinate values.
 var grid = []
-export (Vector2) var grid_size = Vector2(4, 4)
+export (Vector2) var grid_size
 
 const DOWN = Vector2(0, 1)
 const UP = Vector2(0, -1)
@@ -27,7 +27,6 @@ var remaining_number_of_combo_death = 0
 var combo_coins_to_remove = []
 
 onready var Coin = preload("res://Coin/Coin.tscn")
-onready var Player = preload("res://Player/Player.tscn")
 
 func _ready():
 	for x in range(grid_size.x):
@@ -44,12 +43,6 @@ func _ready():
 			grid[x][y] = new_coin.type
 			add_child(new_coin)
 			coin_container.append(new_coin)
-		
-	# Place the player at the bottom-right corner.
-	var new_player = Player.instance()
-	var starting_player_position = Vector2(grid_size.x-1, grid_size.y-1)
-	new_player.set_position(map_to_world(starting_player_position) + half_tile_size)
-	add_child(new_player)
 
 # Given a world coordinate position and a direction to move from it, determine if the intended
 # cell is within the grid's boundaries.
