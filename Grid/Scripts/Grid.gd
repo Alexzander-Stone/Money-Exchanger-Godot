@@ -67,7 +67,7 @@ func remove_from_grid(child):
 	grid[gridPos.x][gridPos.y] = null
 
 # Returns a nearby world position in reference to the passed child's position in the grid.
-func directed_nearby_pos(child, direction):
+func cell_at_direction_of(child, direction):
 	var gridPos = world_to_map(child.get_position())
 	var newGridPos = gridPos + direction
 	

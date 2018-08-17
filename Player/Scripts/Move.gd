@@ -13,7 +13,7 @@ func enter():
 	# Find the grid position to move towards.
 	update_target_direction(pos, g_pos)
 	if owner.grid.does_cell_exist_at_world(pos, target_direction):
-		owner.grid_position = owner.grid.directed_nearby_pos(owner, target_direction)
+		owner.grid_position = owner.grid.cell_at_direction_of(owner, target_direction)
 	.enter()
 
 func update(delta):
