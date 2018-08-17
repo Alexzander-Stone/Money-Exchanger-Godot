@@ -72,7 +72,7 @@ func deselect_coins(playerPos):
 		start_pos = grid.map_to_world(Vector2(start_pos.x, grid.grid_size.y+coin_offset)) + grid.half_tile_size
 		coin.release_from_inventory(start_pos)
 		
-		var grid_pos = grid.fill_cell_pos(coin, coinGridPos)
+		var grid_pos = grid.fill_cell_at_pos(coin, coinGridPos)
 		coin.move_to_pos(grid_pos)
 		
 		coinGridPos += grid.map_to_world(grid.DOWN)

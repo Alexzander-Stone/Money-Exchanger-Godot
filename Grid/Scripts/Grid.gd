@@ -61,6 +61,14 @@ func is_cell_vacant(pos, direction):
 			return true
 	return false
 
+# Fills cell position with new type based on the given child object.
+# Returns the world coordinates for the new filled cell.
+func fill_cell_at_pos(child, pos):
+	var newGridPos = world_to_map(pos)
+	var worldPos = pos + half_tile_size
+	grid[newGridPos.x][newGridPos.y] = child.type
+	return worldPos
+
 # Erase a grid cell's contents.
 func remove_from_grid(child):
 	var gridPos = world_to_map(child.grid_position)
@@ -73,42 +81,6 @@ func cell_at_direction_of(child, direction):
 	
 	var targetPos = map_to_world(newGridPos) + half_tile_size
 	return targetPos
-
-# Remove a coin from the cell and destroy it. Update any coins below to move up if needed.
-func spawn_coin(coin_type, worldPos):
-	var new_coin = Coin.instance()
-	new_coin.change_coin_value(coin_type, entity_values[coin_type], entity_names[coin_type])
-	new_coin.set_position(worldPos)
-	add_child(new_coin)
-	# Find the empty spot above the player.
-	var coinGridPos = world_to_map(worldPos)
-	while is_cell_vacant(map_to_world(coinGridPos), UP):
-		coinGridPos += UP
-	
-	# Give illusion of coin falling up by placing into a starting position, then immediately giving it
-	# another free cell above to move towards.
-	new_coin.move_to_pos(map_to_world(coinGridPos) + half_tile_size)
-	grid[coinGridPos.x][coinGridPos.y] = new_coin.type
-	coin_container.append(new_coin)
-	return new_coin
-
-
-# Remove a coin from the cell and destroy it. Update any coins below to move up if needed.
-func remove_coin(coin):
-	var worldPos = coin.grid_position
-	remove_from_grid(coin)
-	coin.queue_free()
-	coin_container.remove(coin_container.find(coin))
-	# Remove from combo container if needed.
-	emit_signal("coin_removed", coin)
-
-# Fills cell position with new type based on the given child object.
-# Returns the world coordinates for the new filled cell.
-func fill_cell_pos(child, pos):
-	var newGridPos = world_to_map(pos)
-	var worldPos = pos + half_tile_size
-	grid[newGridPos.x][newGridPos.y] = child.type
-	return worldPos
 
 # Return true if movement transition is finished. Uses the grid position as the parameter.
 func is_coin_moving_at_grid(gridPos):
@@ -125,8 +97,44 @@ func is_coin_moving_at_world(worldPos):
 			return false
 	return true
 
+"""
+Creates a new coin object at a given world position. If there is free space above
+the coin, it will immediately begin traveling towards it. Grid array values are reflected
+accurately at the introduction of the new coin and it's intended grid_position.
+
+coin_type - Describes coin value and attributes.
+worldPos - Location in world coordinates for coin to be placed.
+"""
+func spawn_coin(coin_type, worldPos):
+	var new_coin = Coin.instance()
+	new_coin.change_coin_value(coin_type, entity_values[coin_type], entity_names[coin_type])
+	new_coin.set_position(worldPos)
+	add_child(new_coin)
+	
+	# Give illusion of coin falling up by placing into a starting position, then immediately giving it
+	# another free cell above to move towards.
+	var coinGridPos = world_to_map(worldPos)
+	while is_cell_vacant(map_to_world(coinGridPos), UP):
+		coinGridPos += UP
+	new_coin.move_to_pos(map_to_world(coinGridPos) + half_tile_size)
+	fill_cell_at_pos(new_coin, map_to_world(coinGridPos))
+	
+	coin_container.append(new_coin)
+	return new_coin
+
+
+# Remove a coin from the cell and destroy it. Update any coins below to move up if needed.
+func remove_coin(coin):
+	var worldPos = coin.grid_position
+	remove_from_grid(coin)
+	coin.queue_free()
+	coin_container.remove(coin_container.find(coin))
+	# Alert combo container of removal.
+	emit_signal("coin_removed", coin)
+
 # Given a position, move all cell entries from below it up by 1 vertical position.
-# Only needs to move by one per call since when a single coin removal will only impact the grid by one unit.
+# Only needs to move by one per call since when a single coin removal will only impact the grid by one unit
+# of displacement.
 func grid_chain_cascade(gridPos):
 	var y = gridPos.y
 	while y < grid_size.y-1:
@@ -136,7 +144,7 @@ func grid_chain_cascade(gridPos):
 				var worldPos = map_to_world(Vector2(gridPos.x, y)) + half_tile_size
 				remove_from_grid(coin)
 				coin.move_to_pos(worldPos)
-				fill_cell_pos(coin, worldPos)
+				fill_cell_at_pos(coin, worldPos)
 				check_combo_of(coin)
 		y += 1
 
