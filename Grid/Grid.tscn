@@ -2,9 +2,9 @@
 
 [ext_resource path="res://Grid/Scripts/Grid.gd" type="Script" id=1]
 [ext_resource path="res://Grid/Scripts/Grid Visualizer.gd" type="Script" id=2]
-[ext_resource path="res://Coin Interaction.gd" type="Script" id=3]
-[ext_resource path="res://Combo Interaction.gd" type="Script" id=4]
-[ext_resource path="res://Grid/Row Spawner.gd" type="Script" id=5]
+[ext_resource path="res://Grid/Scripts/Coin Interaction.gd" type="Script" id=3]
+[ext_resource path="res://Grid/Scripts/Combo Interaction.gd" type="Script" id=4]
+[ext_resource path="res://Grid/Scripts/Coin Spawner.gd" type="Script" id=5]
 
 [node name="Grid" type="TileMap" index="0"]
 
@@ -41,7 +41,7 @@ script = ExtResource( 3 )
 
 script = ExtResource( 4 )
 
-[node name="Row Spawner" type="Node" parent="." index="3"]
+[node name="Coin Spawner" type="Node" parent="." index="3"]
 
 script = ExtResource( 5 )
 

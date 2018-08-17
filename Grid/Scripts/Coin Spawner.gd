@@ -7,7 +7,7 @@ func _ready():
 	grid.connect("row_spawned", self, "spawn_row")
 
 # Pushes the original coins in the grid down by one cell vertically.
-# Then creates new coin objects at the top of the grid. 
+# Then creates new coin objects at the top of the grid.
 func spawn_row():
 	var grid_size = grid.grid_size
 	# Push the contents of the grid down one (can change to variable size).

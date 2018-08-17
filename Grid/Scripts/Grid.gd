@@ -38,15 +38,12 @@ func _ready():
 	for x in range(grid_size.x):
 		for y in range(grid_size.y/2):
 			var coin_type = ENTITY_TYPES.values()[randi() % 6]
-			var new_coin = Coin.instance()
-			new_coin.change_coin_value(coin_type, entity_values[coin_type], entity_names[coin_type])
-			new_coin.set_position(map_to_world(Vector2(x,y)) + half_tile_size)
-			grid[x][y] = new_coin.type
+			var new_coin = spawn_coin(coin_type, map_to_world(Vector2(x,y)) + half_tile_size)
 			add_child(new_coin)
 			coin_container.append(new_coin)
 
 func _process(delta):
-	# Add a new row to the grid.
+	# TESTING
 	if Input.is_action_just_pressed("ui_down"):
 		spawn_new_coin_row()
 
@@ -125,11 +122,6 @@ func fill_cell_pos(child, pos):
 	grid[newGridPos.x][newGridPos.y] = child.type
 	return worldPos
 
-# Pushes the original coins in the grid down by one cell vertically.
-# Then creates new coin objects at the top of the grid. 
-func spawn_new_coin_row():
-	emit_signal("row_spawned")
-
 # Return true if movement transition is finished. Uses the grid position as the parameter.
 func is_coin_moving_at_grid(gridPos):
 	var worldPos = map_to_world(gridPos) + half_tile_size
@@ -162,3 +154,8 @@ func grid_chain_cascade(gridPos):
 
 func check_combo_of(coin):
 	emit_signal("coin_comboed", coin)
+
+# Pushes the original coins in the grid down by one cell vertically.
+# Then creates new coin objects at the top of the grid. 
+func spawn_new_coin_row():
+	emit_signal("row_spawned")
