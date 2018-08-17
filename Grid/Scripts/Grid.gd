@@ -128,31 +128,6 @@ func fill_cell_pos(child, pos):
 # Pushes the original coins in the grid down by one cell vertically.
 # Then creates new coin objects at the top of the grid. 
 func spawn_new_coin_row():
-	# Push the contents of the grid down one (can change to variable size).
-	for gridX in range(grid_size.x):
-		# Used to reverse the iteration of x, in descending order.
-		var reverseGridX = grid_size.x-1-gridX
-		var gridY = grid_size.y-1
-		while gridY > 0:
-			# Update grid.
-			grid[reverseGridX][gridY] = grid[reverseGridX][gridY-1]
-			# Update coin objects.
-			var coinWorldPos = map_to_world(Vector2(reverseGridX, gridY-1)) + half_tile_size
-			for coin in coin_container:
-				if coin.grid_position == coinWorldPos:
-					coin.move_to_pos(map_to_world(Vector2(reverseGridX, gridY)) + half_tile_size)
-			gridY -= 1
-	# Create the new row of coins. Need to add coin as child as required by the _ready func.
-	for gridX in range(grid_size.x):
-		var coin_type = ENTITY_TYPES.values()[randi() % 6]
-		var new_coin = Coin.instance()
-		new_coin.change_coin_value(coin_type, entity_values[coin_type], entity_names[coin_type])
-		new_coin.set_position(map_to_world(Vector2(gridX, -1)) + half_tile_size)
-		add_child(new_coin)
-		new_coin.move_to_pos(map_to_world(Vector2(gridX, 0)) + half_tile_size)
-		grid[gridX][0] = new_coin.type
-		coin_container.append(new_coin)
-	# Increment the spawn location for combo coins if one is being used currently.
 	emit_signal("row_spawned")
 
 # Return true if movement transition is finished. Uses the grid position as the parameter.

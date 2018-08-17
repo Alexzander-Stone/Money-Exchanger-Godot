@@ -97,7 +97,6 @@ func finish_combo(coins):
 		
 		# Remove the space occupied by the new coin from the cascade.
 		var index = coin_positions.find(grid.world_to_map(coin.grid_position))
-		print(index)
 		if index != -1:
 			coin_positions.remove(index)
 	
