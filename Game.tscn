@@ -1,9 +1,10 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://Game.gd" type="Script" id=1]
 [ext_resource path="res://Grid/Scripts/Grid.gd" type="Script" id=2]
 [ext_resource path="res://Grid/Scripts/Grid Visualizer.gd" type="Script" id=3]
 [ext_resource path="res://Coin Interaction.gd" type="Script" id=4]
+[ext_resource path="res://Combo Interaction.gd" type="Script" id=5]
 
 [node name="Game" type="Node" index="0"]
 
@@ -39,5 +40,9 @@ script = ExtResource( 3 )
 [node name="Coin Interaction" type="Node" parent="Grid" index="1"]
 
 script = ExtResource( 4 )
+
+[node name="Combo Interaction" type="Node" parent="Grid" index="2"]
+
+script = ExtResource( 5 )
 
 

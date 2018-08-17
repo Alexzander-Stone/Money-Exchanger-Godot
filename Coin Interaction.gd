@@ -82,7 +82,7 @@ func deselect_coins(playerPos):
 	# If they are combined, move coins below up by 1 vertical coordinate.
 	# Can't have multiple calls of combine_coins, need to wait until the previous is entirely finished.
 	# To solve this, keep a queue of coins to check for combinations.
-	grid.combo_coin_container.append(inventory_queue[inventory_queue.size()-1])
+	grid.check_combo_of(inventory_queue[inventory_queue.size()-1])
 	
 	# Empty Inventory
 	inventory_queue.clear()
