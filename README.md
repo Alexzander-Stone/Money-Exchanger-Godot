@@ -44,6 +44,11 @@ State Machines -
 	Coin uses the pushdown automaton.
 	
 	Player uses a simple FSM.
+	
+Observor Pattern -
+	
+	Godot signal system used to alert objects (like Player) of state changes, through emitters.
+
 
 ## Acknowledgments
 
